@@ -7,7 +7,7 @@ set -e
 # This script is created and enhanced using the thoughts of the below given link reference.
 # REFERENCE: https://lb.raspberrypi.org/forums/viewtopic.php?t=211542
 # Although, the script is created using the thought process of the above link,
-# there are many enhancements made to solve BUGS (occurred during evaluation and testing phase) 
+# there are many enhancements made to solve BUGS (occurred during evaluation and testing phase)
 # and to promote many advanced features to automate and setup the single WiFi chip of
 # Raspberry Pi as an Access Point(AP) and Station(STA) Network both (and hence, supporting
 # HOTSPOT feature in Raspberry Pi using the execution of this script).
@@ -43,19 +43,19 @@ apPassphrase=""
 apPasswordConfig=""
 
 # REFERENCE: Country codes taken from: https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2
-countryCodeArray=('AD', 'AE', 'AF', 'AG', 'AI', 'AL', 'AM', 'AO', 'AQ', 'AR', 'AS', 'AT', 'AU', 'AW', 'AX', 'AZ', 
-'BA', 'BB', 'BD', 'BE', 'BF', 'BG', 'BH', 'BI', 'BJ', 'BL', 'BM', 'BN', 'BO', 'BQ', 'BR', 'BS', 'BT', 'BV', 'BW', 
-'BY', 'BZ', 'CA', 'CC', 'CD', 'CF', 'CG', 'CH', 'CI', 'CK', 'CL', 'CM', 'CN', 'CO', 'CR', 'CU', 'CV', 'CW', 'CX', 
-'CY', 'CZ', 'DE', 'DJ', 'DK', 'DM', 'DO', 'DZ', 'EC', 'EE', 'EG', 'EH', 'ER', 'ES', 'ET', 'FI', 'FJ', 'FK', 'FM', 
-'FO', 'FR', 'GA', 'GB', 'GD', 'GE', 'GF', 'GG', 'GH', 'GI', 'GL', 'GM', 'GN', 'GP', 'GQ', 'GR', 'GS', 'GT', 'GU', 
-'GW', 'GY', 'HK', 'HM', 'HN', 'HR', 'HT', 'HU', 'ID', 'IE', 'IL', 'IM', 'IN', 'IO', 'IQ', 'IR', 'IS', 'IT', 'JE', 
-'JM', 'JO', 'JP', 'KE', 'KG', 'KH', 'KI', 'KM', 'KN', 'KP', 'KR', 'KW', 'KY', 'KZ', 'LA', 'LB', 'LC', 'LI', 'LK', 
-'LR', 'LS', 'LT', 'LU', 'LV', 'LY', 'MA', 'MC', 'MD', 'ME', 'MF', 'MG', 'MH', 'MK', 'ML', 'MM', 'MN', 'MO', 'MP', 
-'MQ', 'MR', 'MS', 'MT', 'MU', 'MV', 'MW', 'MX', 'MY', 'MZ', 'NA', 'NC', 'NE', 'NF', 'NG', 'NI', 'NL', 'NO', 'NP', 
-'NR', 'NU', 'NZ', 'OM', 'PA', 'PE', 'PF', 'PG', 'PH', 'PK', 'PL', 'PM', 'PN', 'PR', 'PS', 'PT', 'PW', 'PY', 'QA', 
-'RE', 'RO', 'RS', 'RU', 'RW', 'SA', 'SB', 'SC', 'SD', 'SE', 'SG', 'SH', 'SI', 'SJ', 'SK', 'SL', 'SM', 'SN', 'SO', 
-'SR', 'SS', 'ST', 'SV', 'SX', 'SY', 'SZ', 'TC', 'TD', 'TF', 'TG', 'TH', 'TJ', 'TK', 'TL', 'TM', 'TN', 'TO', 'TR', 
-'TT', 'TV', 'TW', 'TZ', 'UA', 'UG', 'UM', 'US', 'UY', 'UZ', 'VA', 'VC', 'VE', 'VG', 'VI', 'VN', 'VU', 'WF', 'WS', 
+countryCodeArray=('AD', 'AE', 'AF', 'AG', 'AI', 'AL', 'AM', 'AO', 'AQ', 'AR', 'AS', 'AT', 'AU', 'AW', 'AX', 'AZ',
+'BA', 'BB', 'BD', 'BE', 'BF', 'BG', 'BH', 'BI', 'BJ', 'BL', 'BM', 'BN', 'BO', 'BQ', 'BR', 'BS', 'BT', 'BV', 'BW',
+'BY', 'BZ', 'CA', 'CC', 'CD', 'CF', 'CG', 'CH', 'CI', 'CK', 'CL', 'CM', 'CN', 'CO', 'CR', 'CU', 'CV', 'CW', 'CX',
+'CY', 'CZ', 'DE', 'DJ', 'DK', 'DM', 'DO', 'DZ', 'EC', 'EE', 'EG', 'EH', 'ER', 'ES', 'ET', 'FI', 'FJ', 'FK', 'FM',
+'FO', 'FR', 'GA', 'GB', 'GD', 'GE', 'GF', 'GG', 'GH', 'GI', 'GL', 'GM', 'GN', 'GP', 'GQ', 'GR', 'GS', 'GT', 'GU',
+'GW', 'GY', 'HK', 'HM', 'HN', 'HR', 'HT', 'HU', 'ID', 'IE', 'IL', 'IM', 'IN', 'IO', 'IQ', 'IR', 'IS', 'IT', 'JE',
+'JM', 'JO', 'JP', 'KE', 'KG', 'KH', 'KI', 'KM', 'KN', 'KP', 'KR', 'KW', 'KY', 'KZ', 'LA', 'LB', 'LC', 'LI', 'LK',
+'LR', 'LS', 'LT', 'LU', 'LV', 'LY', 'MA', 'MC', 'MD', 'ME', 'MF', 'MG', 'MH', 'MK', 'ML', 'MM', 'MN', 'MO', 'MP',
+'MQ', 'MR', 'MS', 'MT', 'MU', 'MV', 'MW', 'MX', 'MY', 'MZ', 'NA', 'NC', 'NE', 'NF', 'NG', 'NI', 'NL', 'NO', 'NP',
+'NR', 'NU', 'NZ', 'OM', 'PA', 'PE', 'PF', 'PG', 'PH', 'PK', 'PL', 'PM', 'PN', 'PR', 'PS', 'PT', 'PW', 'PY', 'QA',
+'RE', 'RO', 'RS', 'RU', 'RW', 'SA', 'SB', 'SC', 'SD', 'SE', 'SG', 'SH', 'SI', 'SJ', 'SK', 'SL', 'SM', 'SN', 'SO',
+'SR', 'SS', 'ST', 'SV', 'SX', 'SY', 'SZ', 'TC', 'TD', 'TF', 'TG', 'TH', 'TJ', 'TK', 'TL', 'TM', 'TN', 'TO', 'TR',
+'TT', 'TV', 'TW', 'TZ', 'UA', 'UG', 'UM', 'US', 'UY', 'UZ', 'VA', 'VC', 'VE', 'VG', 'VI', 'VN', 'VU', 'WF', 'WS',
 'YE', 'YT', 'ZA', 'ZM', 'ZW')
 
 workDir="/home/pi"
@@ -82,7 +82,7 @@ apIpAddrValid=true
 rebootFlag=true
 wlanInterfaceNameValid=true
 
-# Defined common WLAN and AP Interface names here as in the recent and future versions of Debian based OS 
+# Defined common WLAN and AP Interface names here as in the recent and future versions of Debian based OS
 # may change the Networking Interface name.
 wlanInterfaceNameDefault="wlan0"
 wlanInterfaceName="$wlanInterfaceNameDefault"
@@ -91,7 +91,7 @@ hostNameDefault="raspberrypi"
 hostName="$hostNameDefault"
 
 # FIX: for https://github.com/idev1/rpihotspot/issues/12#issuecomment-605552834
-if [ ! -z "$( hostname )" ]; then 
+if [ ! -z "$( hostname )" ]; then
     hostName="$( hostname )"
 fi
 
@@ -129,14 +129,14 @@ function validIpAddress()
     local  ip=$1
     local  status=1
     if [[ $ip =~ ^(10|172|192)\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}$ ]]; then
-        
+
         IFS='.' read ipi1 ipi2 ipi3 ipi4 <<< "$ip"
         IFS='.' read -r -a wlanIpMaskArr <<< "$wlanIpMask"
         IFS='.' read -r -a wlanIpAddrArr <<< "$wlanIpAddr"
-        
+
         wlanIpStartWith=""
         wlanIpStartWithCount=0
-        
+
         for i in ${!wlanIpMaskArr[@]}; do
 	        mskVal=${wlanIpMaskArr[$i]}
             if [ $mskVal == 255 ]; then
@@ -148,11 +148,11 @@ function validIpAddress()
                 wlanIpStartWithCount=$((wlanIpStartWithCount+1))
             fi
         done
-        
+
         wlanIpStartWith="$wlanIpStartWith."
-        
+
         case $ipi1 in
-        10) 
+        10)
             [[ ( $ip != $wlanIpAddr && ! $ip =~ ${wlanIpStartWith}* ) && \
                 ((${#ipi2} -eq 1 && ${ipi2} -le 255) || (${#ipi2} -gt 1 && "${ipi2}" != 0* && ${ipi2} -le 255)) && \
                 ((${#ipi3} -eq 1 && ${ipi3} -le 255) || (${#ipi3} -gt 1 && "${ipi3}" != 0* && ${ipi3} -le 255)) && \
@@ -160,7 +160,7 @@ function validIpAddress()
              ]]
             status=$?
         ;;
-        172) 
+        172)
             [[  ( $ip != $wlanIpAddr && ! $ip =~ ${wlanIpStartWith}* ) && \
                 ("${ipi2}" != 0* && ${ipi2} -ge 16 && ${ipi2} -le 31) && \
                 ((${#ipi3} -eq 1 && ${ipi3} -le 255) || (${#ipi3} -gt 1 && "${ipi3}" != 0* && ${ipi3} -le 255)) && \
@@ -168,7 +168,7 @@ function validIpAddress()
              ]]
             status=$?
         ;;
-        192) 
+        192)
             [[  ( $ip != $wlanIpAddr && ! $ip =~ ${wlanIpStartWith}* ) && \
                 ("${ipi2}" != 0* && ${ipi2} -eq 168) && \
                 ((${#ipi3} -eq 1 && ${ipi3} -le 255) || (${#ipi3} -gt 1 && "${ipi3}" != 0* && ${ipi3} -le 255)) && \
@@ -181,13 +181,13 @@ function validIpAddress()
     return $status
 }
 
-# Check first if a valid --wifi-interface name option is provided or not. 
+# Check first if a valid --wifi-interface name option is provided or not.
 # If a valid --wifi-interface name option is provided then, reset the WLAN details
 # by calling the function: setWlanDetails.
 for i in ${!options[@]}; do
-    
+
     option="${options[$i]}"
-    
+
     if [[ "$option" == --wifi-interface=* ]]; then
         wlanInterfaceNameTemp="$(echo $option | awk -F '=' '{print $2}')"
         if [ ! -z "$wlanInterfaceNameTemp" ]; then
@@ -208,11 +208,11 @@ done
 for i in ${!options[@]}; do
 
     option="${options[$i]}"
-    
+
     if [ "$option" = "--clean" ]; then
         cleanup=true
     fi
-    
+
     if [ "$option" = "--install" ]; then
         install=true
     fi
@@ -220,14 +220,14 @@ for i in ${!options[@]}; do
     if [ "$option" = "--install-upgrade" ]; then
         installUpgrade=true
     fi
-    
+
     if [[ "$option" == --ap-ssid=* ]]; then
         apSsid="$(echo $option | awk -F '=' '{print $2}')"
         if [[ "$apSsid" =~ ^[A-Za-z0-9_-]{3,}$ ]]; then
             apSsidValid=true
         fi
     fi
-    
+
     if [[ "$option" == --ap-password=* ]]; then
 	    apPassphrase="$(echo $option | awk -F '=' '{print $2}')"
         if [[ "$apPassphrase" =~ ^[A-Za-z0-9@#$%^\&*_+-]{8,}$ ]]; then
@@ -235,7 +235,7 @@ for i in ${!options[@]}; do
 	        apPasswordConfig="wpa_passphrase=$apPassphrase"
         fi
     fi
-    
+
     if [[ "$option" == --ap-country-code=* ]]; then
 	    apCountryCodeTemp="$(echo $option | awk -F '=' '{print $2}')"
 	    if [ ! -z "$apCountryCodeTemp" ]; then
@@ -253,7 +253,7 @@ for i in ${!options[@]}; do
             fi
         fi
     fi
-    
+
     if [[ "$option" == --ap-ip-address=* ]]; then
         apIpAddrTemp="$(echo $option | awk -F '=' '{print $2}')"
         if [ ! -z "$apIpAddrTemp" ]; then
@@ -268,7 +268,7 @@ for i in ${!options[@]}; do
                 div=$((apIpLastDigit/100))
                 minCalcDigit=1
                 maxCalcDigit=100
-                
+
                 case $div in
                 # Between (0-99)
                 0) minCalcDigit=$((apIpLastDigit+1)); maxCalcDigit=$((minCalcDigit+100)) ;;
@@ -278,14 +278,14 @@ for i in ${!options[@]}; do
                 2) minCalcDigit=$((256-apIpLastDigit)); maxCalcDigit=$((minCalcDigit+100)) ;;
                 *) minCalcDigit=1; maxCalcDigit=100 ;;
                 esac
-                
+
                 case ${apIpArr[0]} in
                 10) apIpSubnetSize=24 ;;
                 172) apIpSubnetSize=20 ;;
                 192) apIpSubnetSize=16 ;;
                 *) apIpSubnetSize=24 ;;
                 esac
-                
+
                 apDhcpRange="${apIpFirstThreeDigits}.${minCalcDigit},${apIpFirstThreeDigits}.${maxCalcDigit},12h"
                 apSetupIptablesMasquerade="iptables -t nat -A POSTROUTING -s ${apIpFirstThreeDigits}.0/${apIpSubnetSize} ! -d ${apIpFirstThreeDigits}.0/${apIpSubnetSize} -j MASQUERADE"
             else
@@ -293,7 +293,7 @@ for i in ${!options[@]}; do
             fi
         fi
     fi
-    
+
 done
 
 # Process AP Password encryption:
@@ -400,7 +400,7 @@ doRemoveApIpEntriesFromHostFile() {
 
 doAddApIpEntriesToHostFile() {
 
-    cat > /etc/hosts <<EOF 
+    cat > /etc/hosts <<EOF
 127.0.0.1       localhost
 ::1             localhost ip6-localhost ip6-loopback
 ff02::1         ip6-allnodes
@@ -491,7 +491,7 @@ doCleanup() {
         echo "[Remove]: /etc/dnsmasq.conf"
         rm -f /etc/dnsmasq.conf
     fi
-    
+
     if [ -f "/etc/dnsmasq.conf.orig" ]; then
         echo "[Remove]: /etc/dnsmasq.conf.orig"
         rm -f /etc/dnsmasq.conf
@@ -512,53 +512,53 @@ doCleanup() {
         systemctl disable netStop.service
         echo "[Remove]: stop/disable service -> netStop"
     fi
-    
+
     if [ -f "$netStopServiceFile" ]; then
         echo "[Remove]: $netStopServiceFile"
         rm -f $netStopServiceFile
     fi
-    
+
     if [ -f "$netStartFile" ]; then
         echo "[Remove]: $netStartFile"
         rm -f $netStartFile
     fi
-    
+
     if [ -f "$netStopFile" ]; then
         echo "[Remove]: $netStopFile"
         rm -f $netStopFile
     fi
-    
+
     if [ -f "$netLogFile" ]; then
         echo "[Remove]: $netLogFile"
         rm -f $netLogFile
     fi
-    
+
     if [ -f "$rcLocalLogFile" ]; then
         echo "[Remove]: $rcLocalLogFile"
         rm -f $rcLocalLogFile
     fi
-    
+
     if [ -f "$shutdownRecoveryFile" ]; then
         echo "[Remove]: $shutdownRecoveryFile"
         rm -f $shutdownRecoveryFile
     fi
-    
+
     if [ -f "$netShutdownFlagFile" ]; then
         echo "[Remove]: $netShutdownFlagFile"
         rm -f $netShutdownFlagFile
     fi
-    
+
     doRemoveIpTableNatEntries
 
     # FIX: for https://github.com/idev1/rpihotspot/issues/12#issuecomment-605552834
     doRemoveApIpEntriesFromHostFile
-    
+
     # Clean and auto remove the previously install dependant component if they exists by improper purging.
     doAptClean
 
     #Restart DHCPCD service:
-    # FIX: it seems daemon-reload required on Buster OS+ as the dhcpcd don't start by default 
-    # if the dhcpcd service unit is changed and then, it wait for sometime indicating that a 
+    # FIX: it seems daemon-reload required on Buster OS+ as the dhcpcd don't start by default
+    # if the dhcpcd service unit is changed and then, it wait for sometime indicating that a
     # daemon-restart is required.
     doRestartSysDaemon
     systemctl restart dhcpcd
@@ -568,7 +568,7 @@ doCleanup() {
         echo "[Cleanup]: Forcibly enabled dhcpcd."
     fi
     sleep 5
-    
+
     echo "[Cleanup]: DONE"
 }
 
@@ -598,7 +598,7 @@ echo "[WLAN]: ${wlanInterfaceName} IP Broadcast address: $wlanIpCast"
 echo "[WLAN]: ${wlanInterfaceName} Country Code: $wlanCountryCode"
 echo "[WLAN]: ${wlanInterfaceName} Channel: $wlanChannel"
 
-doCleanup 
+doCleanup
 
 touch $netLogFile
 chmod ug+w $netLogFile
@@ -621,11 +621,11 @@ else
          -f $downloadDir/7_iptables-persistent.deb ]; then
         echo "[Install]: installing: hostapd dnsmasq iptables-persistent from local available dependencies ..."
         dpkg --install $downloadDir/1_libnl-route-3-200.deb
-        dpkg --install $downloadDir/2_hostapd.deb 
-        dpkg --install $downloadDir/3_libnfnetlink0.deb 
-        dpkg --install $downloadDir/4_dnsmasq-base.deb 
-        dpkg --install $downloadDir/5_dnsmasq.deb 
-        dpkg --install $downloadDir/6_netfilter-persistent.deb 
+        dpkg --install $downloadDir/2_hostapd.deb
+        dpkg --install $downloadDir/3_libnfnetlink0.deb
+        dpkg --install $downloadDir/4_dnsmasq-base.deb
+        dpkg --install $downloadDir/5_dnsmasq.deb
+        dpkg --install $downloadDir/6_netfilter-persistent.deb
         dpkg --install $downloadDir/7_iptables-persistent.deb
     fi
 fi
@@ -639,7 +639,7 @@ if ! isAvailableReqDependancies; then
         echo "[Install]: Now retrying 2nd time to download required dependancies ..."
         downloadReqDependancies
     fi
-fi 
+fi
 
 if ! isAvailableReqDependancies; then
     echo "[Install]: Required dependancies: hostapd, dnsmasq and iptables-persistent are not available. Please check your internet connection!"
@@ -697,14 +697,14 @@ EOF
 
 sed -i 's/^#DAEMON_CONF=.*$/DAEMON_CONF="\/etc\/hostapd\/hostapd.conf"/' /etc/default/hostapd
 
-cat > $netStationConfigFile <<EOF 
+cat > $netStationConfigFile <<EOF
 allow-hotplug ${wlanInterfaceName}
 EOF
 
 # Create shutdown recovery script when last time shutdown did not go well.
 cat > $shutdownRecoveryFile <<EOF
 # ----------------------------------------------------------------------------------------------
-# IMPORTANT: 
+# IMPORTANT:
 # ----------------------------------------------------------------------------------------------
 # Improper shutdown/reboot by directly switching of the device or taking off the power plug
 # may result in malfuctioning of Access Point (AP) Network setup or may harm other
@@ -735,8 +735,8 @@ chmod ug+x $shutdownRecoveryFile
 # Create startup script
 cat > $netStartFile <<EOF
 
-# Check shutdown flag file exists for proper last time shutdown 
-# and if last time shutdown did not happen properly then reboot to make sure that, 
+# Check shutdown flag file exists for proper last time shutdown
+# and if last time shutdown did not happen properly then reboot to make sure that,
 # netStop.service properly do the necessary things before shutdown:
 
 # Output the standard errors and messages of rc.local executions to rc.local.log file.
@@ -777,7 +777,7 @@ iptables-save > /etc/iptables.ipv4.nat
 #ifconfig ${apInterfaceName} 10.0.0.1 netmask 255.255.255.0 broadcast 10.0.0.255
 ifconfig ${apInterfaceName} up
 
-# Start hostapd. 10-second sleep avoids some race condition, apparently. It may not need to be that long. (?) 
+# Start hostapd. 10-second sleep avoids some race condition, apparently. It may not need to be that long. (?)
 echo "Starting hostapd service..."
 systemctl start hostapd.service
 sleep 10
@@ -864,7 +864,7 @@ fi
 if [ "$install" = true -o "$installUpgrade" = true ]; then
     if [ "$apSsidValid" = false -o "$apPassphraseValid" = false \
         -o "$apCountryCodeValid" = false -o "$apIpAddrValid" = false ]; then
-        
+
 echo '
 Invalid Access Point(AP) setup options are specified for installation.
 Please provide the below [OPTION] for installation:
@@ -877,26 +877,26 @@ echo '
 [WARNING]: Invalid --wifi-interface name provided. Proceeding with default WiFi interface name as: '$wlanInterfaceNameDefault' ...
 '
         fi
-	        
+	
         if [ "$apSsidValid" = false ]; then
 echo '
 --ap-ssid              Mandatory field for installation: Set Access Point(AP) SSID. Atleast 3 chars long.
                        Allowed special chars are: _ -
 '
         fi
-        
+
         if [ "$apPassphraseValid" = false ]; then
 echo '
 --ap-password          Mandatory field for installation: Set Access Point(AP) Password. Atleast 8 chars long.
                        Allowed special chars are: @ # $ %% ^ & * _ + -
 '
         fi
-        
+
         if [ "$apCountryCodeValid" = false ]; then
 echo '
---ap-country-code      Optional field for installation: Set Access Point(AP) Country Code. Default value is: '$apCountryCodeDefault'. 
+--ap-country-code      Optional field for installation: Set Access Point(AP) Country Code. Default value is: '$apCountryCodeDefault'.
                        Make sure that  the entered Country Code matches WiFi Country Code if it exists in /etc/wpa_supplicant/wpa_supplicant.conf
-                       Allowed Country codes are: 
+                       Allowed Country codes are:
                        '${countryCodeArray[@]:0:30}'
                        '${countryCodeArray[@]:30:30}'
                        '${countryCodeArray[@]:60:30}'
@@ -908,21 +908,21 @@ echo '
                        '${countryCodeArray[@]:240:9}'
 '
         fi
-        
+
         if [ "$apIpAddrValid" = false ]; then
 echo '
 --ap-ip-address        Optional field for installation: Set Access Point(AP) IP Address. Default value is: '$apIpDefault'.
                        LAN/WLAN reserved private Access Point(AP) IP address must in the below range:
                        [10.0.0.0 - 10.255.255.255] or [172.16.0.0 - 172.31.255.255] or [192.168.0.0 - 192.168.255.255]
-                       (Refer site: https://en.wikipedia.org/wiki/Private_network#Private_IPv4_addresses to know more 
+                       (Refer site: https://en.wikipedia.org/wiki/Private_network#Private_IPv4_addresses to know more
                        about above IP address range).
                        Access Point(AP) IP address must not be equal to WiFi Station('${wlanInterfaceName}') IP address: '${wlanIpAddr}'
                        with its submask: '${wlanIpMask}' and broadcast: '${wlanIpCast}'
 '
         fi
-        
+
 echo '
- 
+
 ----------------------------------------------------------------------------
 Example installation without upgrade:
 ----------------------------------------------------------------------------
@@ -930,14 +930,14 @@ sudo ./setup-network.sh --install --ap-ssid="abc-1" --ap-password="password@1" -
 
 
 ----------------------------------------------------------------------------
-Example installation with upgrade: 
+Example installation with upgrade:
 ----------------------------------------------------------------------------
 sudo ./setup-network.sh --install-upgrade --ap-ssid="abc-1" --ap-password="password@1" --ap-password-encrypt --ap-country-code="IN" --ap-ip-address="192.168.0.1" --wifi-interface="wlan0"
-'        
-        
+'
+
         exit 0
     fi
-    
+
     doInstall
     # Sleep for 10s before restarting:
     echo "[Reboot]: In 10 seconds ..."
@@ -952,22 +952,22 @@ if [ "$cleanup" = false -a "$install" = false -a "$installUpgrade" = false ]; th
     See [OPTION] below:
     ============================================================================
     --clean             	Cleans/undo all the previously made network configuration/setup.
-    
+
     --install           	Install network configuration/setup required to make WiFi chip('${wlanInterfaceName}') as Access Point(AP) and Station(STA) both.
-    
+
     --install-upgrade   	Install & Upgrade network configuration/setup required to make WiFi chip('${wlanInterfaceName}') as Access Point(AP) and Station(STA) both.
-    
-    --ap-ssid           	Mandatory field for installation: Set Access Point(AP) SSID. Atleast 3 chars long. 
+
+    --ap-ssid           	Mandatory field for installation: Set Access Point(AP) SSID. Atleast 3 chars long.
 				            Allowed special chars are: _ -
-                        
-    --ap-password       	Mandatory field for installation: Set Access Point(AP) Password. Atleast 8 chars long. 
+
+    --ap-password       	Mandatory field for installation: Set Access Point(AP) Password. Atleast 8 chars long.
 				            Allowed special chars are: @ # $ % ^ & * _ + -
-                        
+
     --ap-password-encrypt	Optional field for installation. If specified, it will encrypt password in hostapd.conf file for security reason.
-    
-    --ap-country-code		Optional field for installation: Set Access Point(AP) Country Code. Default value is: '$apCountryCodeDefault'. 
+
+    --ap-country-code		Optional field for installation: Set Access Point(AP) Country Code. Default value is: '$apCountryCodeDefault'.
                             Make sure that  the entered Country Code matches WiFi Country Code if it exists in /etc/wpa_supplicant/wpa_supplicant.conf
-                            Allowed Country codes are: 
+                            Allowed Country codes are:
                             '${countryCodeArray[@]:0:30}'
                             '${countryCodeArray[@]:30:30}'
                             '${countryCodeArray[@]:60:30}'
@@ -977,39 +977,39 @@ if [ "$cleanup" = false -a "$install" = false -a "$installUpgrade" = false ]; th
                             '${countryCodeArray[@]:180:30}'
                             '${countryCodeArray[@]:210:30}'
                             '${countryCodeArray[@]:240:9}'
-                        
-    --ap-ip-address     	Optional field for installation: Set Access Point(AP) IP Address. Default value is: '$apIpDefault'. 
+
+    --ap-ip-address     	Optional field for installation: Set Access Point(AP) IP Address. Default value is: '$apIpDefault'.
                             LAN/WLAN reserved private Access Point(AP) IP address must in the below range:
                             [10.0.0.0 - 10.255.255.255] or [172.16.0.0 - 172.31.255.255] or [192.168.0.0 - 192.168.255.255]
-                            (Refer site: https://en.wikipedia.org/wiki/Private_network#Private_IPv4_addresses to know more 
+                            (Refer site: https://en.wikipedia.org/wiki/Private_network#Private_IPv4_addresses to know more
                             about above IP address range).
-                            Access Point(AP) IP address must not be equal to WiFi Station('${wlanInterfaceName}') IP address: '${wlanIpAddr}' 
+                            Access Point(AP) IP address must not be equal to WiFi Station('${wlanInterfaceName}') IP address: '${wlanIpAddr}'
                             with its submask: '${wlanIpMask}' and broadcast: '${wlanIpCast}'
 			
-    --wifi-interface		Optional field for installation: Set hardware in-built WiFi interface name to be used. 
+    --wifi-interface		Optional field for installation: Set hardware in-built WiFi interface name to be used.
                             Default value is: '$wlanInterfaceNameDefault'.
-                            If an invalid WiFi interface name is provided then the installation will disregard this 
-                            WiFi interface name and will not throw any error but, the installation will proceed with 
+                            If an invalid WiFi interface name is provided then the installation will disregard this
+                            WiFi interface name and will not throw any error but, the installation will proceed with
                             default in-built WiFi interface name as: '$wlanInterfaceNameDefault'.
-        
-    
+
+
     ----------------------------------------------------------------------------
     Example cleanup:
     ----------------------------------------------------------------------------
     sudo ./setup-network.sh --clean
-    
-    
+
+
     ----------------------------------------------------------------------------
-    Example installation without upgrade: 
+    Example installation without upgrade:
     ----------------------------------------------------------------------------
     sudo ./setup-network.sh --install --ap-ssid="abc-1" --ap-password="password@1" --ap-password-encrypt --ap-country-code="IN" --ap-ip-address="192.168.0.1" --wifi-interface="wlan0"
-    
-    
+
+
     ----------------------------------------------------------------------------
-    Example installation with upgrade: 
+    Example installation with upgrade:
     ----------------------------------------------------------------------------
     sudo ./setup-network.sh --install-upgrade --ap-ssid="abc-1" --ap-password="password@1" --ap-password-encrypt --ap-country-code="IN" --ap-ip-address="192.168.0.1" --wifi-interface="wlan0"
-    
+
     '
     exit 0
 fi
